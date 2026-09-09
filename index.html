@@ -129,8 +129,8 @@
                             </div>
                         </div>
 
-                        <!-- 調整這裡的 Grid 佈局為 lg:grid-cols-4，容納 4 個模式按鈕 -->
-                        <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                            <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                                 <!-- 精熟練習 -->
                                 <label class="relative flex flex-col p-3 bg-slate-50 rounded-2xl border-2 border-indigo-600 cursor-pointer hover:bg-slate-100 transition">
                                     <input type="radio" name="session-mode" value="practice" checked class="absolute top-3 right-3 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
@@ -144,7 +144,7 @@
                                     <span class="font-bold text-indigo-900 text-sm leading-snug pr-6">依序練習<br>(循序)</span>
                                     <span class="text-[11px] text-slate-500 mt-1.5">依照題庫順序出題</span>
                                 </label>
-
+                            
                                 <!-- 計時模擬考 -->
                                 <label class="relative flex flex-col p-3 bg-slate-50 rounded-2xl border-2 border-transparent cursor-pointer hover:bg-slate-100 transition">
                                     <input type="radio" name="session-mode" value="exam" class="absolute top-3 right-3 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
@@ -559,16 +559,13 @@
             else if (checkedCount === 0) textEl.textContent = '請選擇章節';
             else textEl.textContent = `已選擇 ${checkedCount} 個章節`;
 
-            // --- 動態計算過濾後的實際可用題數 ---
             const selectedMod = document.getElementById('moduleSelect').value;
             const selectedFroms = Array.from(document.querySelectorAll('.from-cb')).filter(cb => cb.checked).map(cb => cb.value);
             const selectedSecs = Array.from(cbs).filter(cb => cb.checked).map(cb => cb.value);
             
-            // 依序套用 Module、From、Section 條件
             let pool = selectedMod !== '全部題庫' ? quizDatabase.filter(q => q.module === selectedMod) : quizDatabase;
             pool = pool.filter(q => selectedFroms.includes(q.from) && selectedSecs.includes(q.section));
             
-            // 即時更新 UI 數字與輸入框上限
             document.getElementById('available-count').textContent = pool.length;
             document.getElementById('countInput').max = pool.length || 1;
         }
@@ -818,7 +815,6 @@
                 return;
             }
 
-            // --- 修改點 1：依序模式不打亂陣列順序 ---
             if (mode !== 'sequential') {
                 pool.sort(() => Math.random() - 0.5);
             } else {
@@ -843,7 +839,6 @@
             const checkAnswerBtn = document.getElementById('btn-check-answer');
             const examSubmitCard = document.getElementById('exam-submit-card');
 
-            // --- 修改點 2：加入依序模式的 UI 處理 ---
             if (mode !== 'exam') {
                 if (mode === 'wrong') activeModeBadge.textContent = "錯題重測";
                 else if (mode === 'sequential') activeModeBadge.textContent = "依序練習";
@@ -933,7 +928,6 @@
                     optionStyle = "border-indigo-600 bg-indigo-50/50 ring-2 ring-indigo-600/20";
                 }
 
-                // --- 修改點 3：簡化條件判斷 ---
                 if (activeSession.mode !== 'exam' && isAnswerChecked) {
                     if (isCorrectOption) {
                         optionStyle = "border-emerald-500 bg-emerald-50 text-emerald-950 font-medium ring-2 ring-emerald-500/15";
@@ -963,7 +957,6 @@
             document.getElementById('btn-prev').style.opacity = index === 0 ? "0.4" : "1";
 
             const rationaleBox = document.getElementById('question-rationale-box');
-            // --- 修改點 3：簡化條件判斷 ---
             if (activeSession.mode !== 'exam' && activeSession.correctAnswers[index] !== undefined) {
                 rationaleBox.classList.remove('hidden');
                 document.getElementById('question-rationale-text').innerHTML = q.rationale;
@@ -992,7 +985,6 @@
                 if (isCurrent) {
                     btnStyle = "bg-indigo-600 text-white font-extrabold ring-4 ring-indigo-100 scale-105";
                 } else if (activeSession.mode !== 'exam' && isChecked) {
-                    // --- 修改點 3：簡化條件判斷 ---
                     const isCorrect = userChoice === q.ans;
                     btnStyle = isCorrect ? "bg-emerald-100 text-emerald-800 border-emerald-300 font-bold" : "bg-rose-100 text-rose-800 border-rose-300 font-bold";
                 } else if (userChoice !== undefined) {
@@ -1006,7 +998,6 @@
 
         function selectOption(key) {
             const index = activeSession.currentIndex;
-            // --- 修改點 3：簡化條件判斷 ---
             if (activeSession.mode !== 'exam' && activeSession.correctAnswers[index] !== undefined) return;
 
             activeSession.userAnswers[index] = key;
@@ -1224,7 +1215,6 @@
             }
             if (e.key === 'Enter') {
                 const index = activeSession.currentIndex;
-                // --- 修改點 3：簡化條件判斷 ---
                 if (activeSession.mode !== 'exam' && activeSession.userAnswers[index] && !activeSession.correctAnswers[index]) {
                     checkAnswerDirectly();
                 } else {
