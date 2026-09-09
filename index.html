@@ -105,7 +105,7 @@
                             <div>
                                 <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">題庫 (Module)</label>
                                 <select id="moduleSelect" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                    </select>
+                                </select>
                             </div>
 
                             <div class="relative">
@@ -115,7 +115,7 @@
                                     <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                                 </div>
                                 <div id="fromOptions" class="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-20 hidden max-h-60 overflow-y-auto no-scrollbar">
-                                    </div>
+                                </div>
                             </div>
 
                             <div class="relative">
@@ -125,16 +125,23 @@
                                     <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                                 </div>
                                 <div id="sectionOptions" class="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl z-10 hidden max-h-60 overflow-y-auto no-scrollbar">
-                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- 調整這裡的 Grid 佈局為 lg:grid-cols-4，容納 4 個模式按鈕 -->
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                            <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                                 <label class="relative flex flex-col p-3 bg-slate-50 rounded-2xl border-2 border-indigo-600 cursor-pointer hover:bg-slate-100 transition">
                                     <input type="radio" name="session-mode" value="practice" checked class="absolute top-3 right-3 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
                                     <span class="font-bold text-indigo-900 text-sm">精熟練習 (隨機)</span>
                                     <span class="text-[11px] text-slate-500 mt-1">立即揭曉答案與解析</span>
+                                </label>
+                                <!-- 新增：依序練習 -->
+                                <label class="relative flex flex-col p-3 bg-slate-50 rounded-2xl border-2 border-transparent cursor-pointer hover:bg-slate-100 transition">
+                                    <input type="radio" name="session-mode" value="sequential" class="absolute top-3 right-3 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
+                                    <span class="font-bold text-indigo-900 text-sm">依序練習 (循序)</span>
+                                    <span class="text-[11px] text-slate-500 mt-1">依照題庫順序出題</span>
                                 </label>
                                 <label class="relative flex flex-col p-3 bg-slate-50 rounded-2xl border-2 border-transparent cursor-pointer hover:bg-slate-100 transition">
                                     <input type="radio" name="session-mode" value="exam" class="absolute top-3 right-3 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
@@ -171,7 +178,7 @@
                     </div>
                     
                     <div class="space-y-4 overflow-y-auto pr-2 no-scrollbar flex-1" id="category-progress-bars">
-                        </div>
+                    </div>
                     
                     <div class="pt-4 border-t border-slate-100 mt-4 text-center shrink-0">
                         <span class="text-xs text-slate-400 font-medium">依據您選擇的題庫即時顯示</span>
@@ -194,7 +201,7 @@
                 </div>
 
                 <div class="max-h-[600px] overflow-y-auto space-y-3 pr-2" id="database-browser-list">
-                    </div>
+                </div>
             </div>
         </main>
 
@@ -241,7 +248,7 @@
                         </div>
 
                         <div class="space-y-3" id="question-options-list">
-                            </div>
+                        </div>
 
                         <div id="question-rationale-box" class="hidden mt-6 p-5 bg-indigo-50/50 border border-indigo-100 rounded-2xl transition duration-150 html-content">
                             <h5 class="text-sm font-bold text-indigo-900 flex items-center mb-2">
@@ -281,7 +288,7 @@
                         <h4 class="text-sm font-bold text-slate-800 mb-3 uppercase tracking-wider">答題進度卡</h4>
                         
                         <div class="grid grid-cols-5 gap-2 max-h-64 overflow-y-auto pr-1" id="quiz-grid-navigator">
-                            </div>
+                        </div>
 
                         <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-2 text-xs text-slate-400">
                             <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-indigo-600 mr-1"></span> 當前</div>
@@ -320,7 +327,7 @@
                 </div>
 
                 <div class="space-y-4" id="review-list-container">
-                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -528,9 +535,6 @@
             }));
 
             updateSectionBoxText();
-            
-            document.getElementById('available-count').textContent = pool.length;
-            document.getElementById('countInput').max = pool.length;
         }
 
         function updateFromBoxText() {
@@ -549,6 +553,19 @@
             if (checkedCount === cbs.length && cbs.length > 0) textEl.textContent = '全部章節';
             else if (checkedCount === 0) textEl.textContent = '請選擇章節';
             else textEl.textContent = `已選擇 ${checkedCount} 個章節`;
+
+            // --- 動態計算過濾後的實際可用題數 ---
+            const selectedMod = document.getElementById('moduleSelect').value;
+            const selectedFroms = Array.from(document.querySelectorAll('.from-cb')).filter(cb => cb.checked).map(cb => cb.value);
+            const selectedSecs = Array.from(cbs).filter(cb => cb.checked).map(cb => cb.value);
+            
+            // 依序套用 Module、From、Section 條件
+            let pool = selectedMod !== '全部題庫' ? quizDatabase.filter(q => q.module === selectedMod) : quizDatabase;
+            pool = pool.filter(q => selectedFroms.includes(q.from) && selectedSecs.includes(q.section));
+            
+            // 即時更新 UI 數字與輸入框上限
+            document.getElementById('available-count').textContent = pool.length;
+            document.getElementById('countInput').max = pool.length || 1;
         }
 
         fromSelectBox.addEventListener('click', (e) => {
@@ -796,7 +813,13 @@
                 return;
             }
 
-            pool.sort(() => Math.random() - 0.5);
+            // --- 修改點 1：依序模式不打亂陣列順序 ---
+            if (mode !== 'sequential') {
+                pool.sort(() => Math.random() - 0.5);
+            } else {
+                pool.sort((a, b) => parseInt(a.num) - parseInt(b.num));
+            }
+            
             pool = pool.slice(0, limit);
 
             pool = pool.map(q => {
@@ -815,8 +838,12 @@
             const checkAnswerBtn = document.getElementById('btn-check-answer');
             const examSubmitCard = document.getElementById('exam-submit-card');
 
-            if (mode === 'practice' || mode === 'wrong') {
-                activeModeBadge.textContent = mode === 'wrong' ? "錯題重測" : "練習模式";
+            // --- 修改點 2：加入依序模式的 UI 處理 ---
+            if (mode !== 'exam') {
+                if (mode === 'wrong') activeModeBadge.textContent = "錯題重測";
+                else if (mode === 'sequential') activeModeBadge.textContent = "依序練習";
+                else activeModeBadge.textContent = "練習模式";
+                
                 activeModeBadge.className = "bg-indigo-100 text-indigo-700 text-xs px-3 py-1.5 rounded-lg font-bold";
                 timerContainer.classList.add('hidden');
                 checkAnswerBtn.classList.remove('hidden');
@@ -901,7 +928,8 @@
                     optionStyle = "border-indigo-600 bg-indigo-50/50 ring-2 ring-indigo-600/20";
                 }
 
-                if ((activeSession.mode === 'practice' || activeSession.mode === 'wrong') && isAnswerChecked) {
+                // --- 修改點 3：簡化條件判斷 ---
+                if (activeSession.mode !== 'exam' && isAnswerChecked) {
                     if (isCorrectOption) {
                         optionStyle = "border-emerald-500 bg-emerald-50 text-emerald-950 font-medium ring-2 ring-emerald-500/15";
                         statusBadgeHTML = `<span class="ml-auto bg-emerald-600 text-white rounded-full p-1 shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></span>`;
@@ -930,7 +958,8 @@
             document.getElementById('btn-prev').style.opacity = index === 0 ? "0.4" : "1";
 
             const rationaleBox = document.getElementById('question-rationale-box');
-            if ((activeSession.mode === 'practice' || activeSession.mode === 'wrong') && activeSession.correctAnswers[index] !== undefined) {
+            // --- 修改點 3：簡化條件判斷 ---
+            if (activeSession.mode !== 'exam' && activeSession.correctAnswers[index] !== undefined) {
                 rationaleBox.classList.remove('hidden');
                 document.getElementById('question-rationale-text').innerHTML = q.rationale;
             } else {
@@ -938,7 +967,7 @@
             }
 
             const checkBtn = document.getElementById('btn-check-answer');
-            if (activeSession.mode === 'practice' || activeSession.mode === 'wrong') {
+            if (activeSession.mode !== 'exam') {
                 if (activeSession.correctAnswers[index] !== undefined) checkBtn.classList.add('hidden');
                 else checkBtn.classList.remove('hidden');
             }
@@ -957,7 +986,8 @@
 
                 if (isCurrent) {
                     btnStyle = "bg-indigo-600 text-white font-extrabold ring-4 ring-indigo-100 scale-105";
-                } else if ((activeSession.mode === 'practice' || activeSession.mode === 'wrong') && isChecked) {
+                } else if (activeSession.mode !== 'exam' && isChecked) {
+                    // --- 修改點 3：簡化條件判斷 ---
                     const isCorrect = userChoice === q.ans;
                     btnStyle = isCorrect ? "bg-emerald-100 text-emerald-800 border-emerald-300 font-bold" : "bg-rose-100 text-rose-800 border-rose-300 font-bold";
                 } else if (userChoice !== undefined) {
@@ -971,7 +1001,8 @@
 
         function selectOption(key) {
             const index = activeSession.currentIndex;
-            if ((activeSession.mode === 'practice' || activeSession.mode === 'wrong') && activeSession.correctAnswers[index] !== undefined) return;
+            // --- 修改點 3：簡化條件判斷 ---
+            if (activeSession.mode !== 'exam' && activeSession.correctAnswers[index] !== undefined) return;
 
             activeSession.userAnswers[index] = key;
             renderActiveQuestion();
@@ -1030,7 +1061,6 @@
         }
 
         function submitExamAttempt() {
-            // 移除了 confirm 防呆彈窗，點擊「完成測驗」直接交卷
             clearInterval(activeSession.timerInterval);
             let totalCorrect = 0, totalIncorrect = 0;
 
@@ -1189,7 +1219,8 @@
             }
             if (e.key === 'Enter') {
                 const index = activeSession.currentIndex;
-                if ((activeSession.mode === 'practice' || activeSession.mode === 'wrong') && activeSession.userAnswers[index] && !activeSession.correctAnswers[index]) {
+                // --- 修改點 3：簡化條件判斷 ---
+                if (activeSession.mode !== 'exam' && activeSession.userAnswers[index] && !activeSession.correctAnswers[index]) {
                     checkAnswerDirectly();
                 } else {
                     navigateQuestion(1);
