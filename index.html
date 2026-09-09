@@ -130,28 +130,33 @@
                         </div>
 
                         <!-- 調整這裡的 Grid 佈局為 lg:grid-cols-4，容納 4 個模式按鈕 -->
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                            <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                                <!-- 精熟練習 -->
                                 <label class="relative flex flex-col p-3 bg-slate-50 rounded-2xl border-2 border-indigo-600 cursor-pointer hover:bg-slate-100 transition">
                                     <input type="radio" name="session-mode" value="practice" checked class="absolute top-3 right-3 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
-                                    <span class="font-bold text-indigo-900 text-sm">精熟練習 (隨機)</span>
-                                    <span class="text-[11px] text-slate-500 mt-1">立即揭曉答案與解析</span>
+                                    <span class="font-bold text-indigo-900 text-sm leading-snug pr-6">精熟練習<br>(隨機)</span>
+                                    <span class="text-[11px] text-slate-500 mt-1.5">立即揭曉答案與解析</span>
                                 </label>
-                                <!-- 新增：依序練習 -->
+                            
+                                <!-- 依序練習 -->
                                 <label class="relative flex flex-col p-3 bg-slate-50 rounded-2xl border-2 border-transparent cursor-pointer hover:bg-slate-100 transition">
                                     <input type="radio" name="session-mode" value="sequential" class="absolute top-3 right-3 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
-                                    <span class="font-bold text-indigo-900 text-sm">依序練習 (循序)</span>
-                                    <span class="text-[11px] text-slate-500 mt-1">依照題庫順序出題</span>
+                                    <span class="font-bold text-indigo-900 text-sm leading-snug pr-6">依序練習<br>(循序)</span>
+                                    <span class="text-[11px] text-slate-500 mt-1.5">依照題庫順序出題</span>
                                 </label>
+
+                                <!-- 計時模擬考 -->
                                 <label class="relative flex flex-col p-3 bg-slate-50 rounded-2xl border-2 border-transparent cursor-pointer hover:bg-slate-100 transition">
                                     <input type="radio" name="session-mode" value="exam" class="absolute top-3 right-3 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
-                                    <span class="font-bold text-slate-800 text-sm">計時模擬考 (隨機)</span>
-                                    <span class="text-[11px] text-slate-500 mt-1">交卷後方可檢視成績</span>
+                                    <span class="font-bold text-slate-800 text-sm leading-snug pr-6">計時模擬考<br>(隨機)</span>
+                                    <span class="text-[11px] text-slate-500 mt-1.5">交卷後方可檢視成績</span>
                                 </label>
+                            
+                                <!-- 只練錯題 -->
                                 <label class="relative flex flex-col p-3 bg-slate-50 rounded-2xl border-2 border-transparent cursor-pointer hover:bg-slate-100 transition">
                                     <input type="radio" name="session-mode" value="wrong" class="absolute top-3 right-3 text-rose-500 focus:ring-rose-500 h-4 w-4">
-                                    <span class="font-bold text-rose-800 text-sm">只練錯題 (針對性)</span>
-                                    <span class="text-[11px] text-slate-500 mt-1">僅抽取歷史答錯題目</span>
+                                    <span class="font-bold text-rose-800 text-sm leading-snug pr-6">只練錯題<br>(針對性)</span>
+                                    <span class="text-[11px] text-slate-500 mt-1.5">僅抽取歷史答錯題目</span>
                                 </label>
                             </div>
 
