@@ -818,7 +818,14 @@
             if (mode !== 'sequential') {
                 pool.sort(() => Math.random() - 0.5);
             } else {
-                pool.sort((a, b) => parseInt(a.num) - parseInt(b.num));
+                pool.sort((a, b) => {
+                    // 1. 先比較「來源」(例如：EASA vs ICAT)
+                    if (a.from !== b.from) {
+                        return a.from.localeCompare(b.from);
+                    }
+                    // 2. 如果「來源」相同，再依據「題號」排序
+                    return parseInt(a.num) - parseInt(b.num);
+                });
             }
             
             pool = pool.slice(0, limit);
