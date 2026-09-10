@@ -280,10 +280,6 @@
                                 下一題
                                 <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                             </button>
-                            <button id="btn-finish" onclick="submitExamAttempt()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition duration-150 shadow-md shadow-indigo-100 flex items-center">
-                                完成測驗
-                                <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -301,6 +297,13 @@
                             <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-rose-100 mr-1"></span> 錯誤</div>
                             <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-slate-100 border border-slate-200 mr-1"></span> 未答</div>
                         </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button id="btn-finish" onclick="submitExamAttempt()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition duration-150 shadow-md shadow-indigo-100 flex items-center">
+                            完成測驗
+                            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                        </button>
                     </div>
 
                     <div id="exam-submit-card" class="hidden bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-3xl p-5 border border-indigo-200 shadow-sm space-y-3">
@@ -819,12 +822,10 @@
                 pool.sort(() => Math.random() - 0.5);
             } else {
                 pool.sort((a, b) => {
-                    // 1. 先比較「來源」(例如：EASA vs ICAT)
                     if (a.from !== b.from) {
-                        return a.from.localeCompare(b.from);
+                        return (a.from || '').localeCompare(b.from || '');
                     }
-                    // 2. 如果「來源」相同，再依據「題號」排序
-                    return parseInt(a.num) - parseInt(b.num);
+                    return parseInt(a.num || 0) - parseInt(b.num || 0);
                 });
             }
             
